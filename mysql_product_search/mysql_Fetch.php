@@ -71,7 +71,7 @@
 			echo "<p>從價格<input type='text' name='from'>元，到";
 			echo "價格<input type='text' name='to'>元</p>";
 			echo "<input type='submit'>";
-				
+			echo "<input type='hidden' name='password' value='".$_POST['password']."'>";	
 
 			if (isset($_POST['brand']) and isset($_POST['category']) and isset($_POST['from']) and isset($_POST['to'])){
 
