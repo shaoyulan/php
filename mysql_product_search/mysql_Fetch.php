@@ -18,11 +18,12 @@
 	<BODY>
 		<?php
 			// Basic Setting
+		if(isset($_POST['password'])){
+			$PASSWORD = $_POST['password'];
 			$DB_NAME = 'b13_22914069_php_product_search';
 			$TABLE_NAME = 'price';
 			$MYSQL_SERVER = 'sql300.byethost.com';
 			$USER_NAME = 'b13_22914069';
-			$PASSWORD = 'codeforme';
 			// End of Basic Setting
 
 
@@ -121,6 +122,13 @@
 				}
 
 			}
+		}else{
+			echo "<form action='".$_SERVER['PHP_SELF']."' method='post'>";
+			echo "請輸入密碼<input type='text' name='password'>";
+			echo "<input type='submit'>";
+			echo "</form>";
+		}
+		
 
 
 			// for ($i=0; $i <count($result_unique_brand) ; $i++) { 
