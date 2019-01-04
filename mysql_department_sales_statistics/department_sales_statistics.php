@@ -148,7 +148,7 @@ if(isset($_POST['password'])){
 			// 不同部門，印出名稱
 			if($row[8][$k] != $GLOBALS['dep_name']){
 				global $DepNameArray;
-				echo "<tr><td colspan='7'>".$DepNameArray[$row[8][$k]]."</td></tr>";
+				echo "<tr><td colspan='7'>".$row[8][$k]."</td></tr>";
 			}
 			// 姓名
 			echo "<tr><td>".$row[0][$k]."</td>";
@@ -218,13 +218,14 @@ if(isset($_POST['password'])){
 
 
 		echo "<select name='dep'>";
+		
+		mysqli_data_seek($GLOBALS['DepResult'],0);
 		while($row = mysql_fetch_array($GLOBALS['DepResult'])){
 			// value = 代號 A B C D
 			echo "<option value='".$row[1][0].';'.$row[0]."'>".$row[0];
 		}
-		// mysqli_data_seek($GLOBALS['DepResult'],0);
+		
 		echo "</select>";
-
 		echo "<button type='submit'>送出";
 		echo "</form>";
 	}
