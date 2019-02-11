@@ -15,7 +15,7 @@
 	}
 	
 	.wrap{width:100%;} /*最外層*/
-	.left_bar{width:10%;height:827.68px;display:inline-block;float:left;padding:100px 0 0 40px;}
+	.left_bar{width:10%;height:827.68px;display:inline-block;float:left;padding:100px 0 0 0;}
 	.container{width:85%;margin: 0 auto;display:inline-block;float:left;position: relative;}
 	
 	/*所有背景圖片基本格式*/
@@ -48,7 +48,8 @@
 	.check1{width:80px;height: 30px;display: inline-block;text-align: center;border:3px solid rgb(227,97,3);border-radius: 5px}
 	.check1:hover{background:var(--light-orange);transition: 1s;cursor:pointer;}
 
-	.block{float:left;width:33%;padding-bottom: 20px;}
+	.wraper{display:flex;flex-wrap:wrap}
+	.block{margin: 0 1%;padding-bottom: 20px;}
 	table{text-align: center;}
 	td{width:50px;}
 	.title{text-align: center}
@@ -105,7 +106,7 @@
 
 		//網頁標題
 		echo "<h1>西元".$YEAR."</h1>";
-
+		echo "<div class='wraper'>";
 		//程式開始
 		for ($m=1; $m <=12 ; $m++) { 
 
@@ -224,9 +225,11 @@
 			 echo "</table></div>";
 
 		}
+		
 
 
 		?>
+		</div>
 	</div>
 	
 </div>
