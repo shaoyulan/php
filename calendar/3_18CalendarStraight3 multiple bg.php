@@ -2,6 +2,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=big5">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="short icon" href="">
+<meta name="description" content="calendar">
+<meta name="keyword" content="calendar">
+<meta property="og:title" content="calendar">
+<meta property="og:description" content="calendar">
+<meta property="og:type" content="website">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <title>while 重覆結構</title>
 <style>
 	:root{--light-orange:rgba(241,165,4);}
@@ -54,7 +64,12 @@
 	td{width:50px;}
 	.title{text-align: center}
 	h1{text-align: center}
-
+	@media only screen and (max-width: 576px){
+		.check1{
+			position: absolute;
+			top: 10px;
+		}
+	}
 </style>
 </head>
 <body>
