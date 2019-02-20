@@ -37,7 +37,7 @@
 		z-index: -2;
 		top: 0;
 		left: 0;
-		background-position: cover;	
+		background-size: cover;	
 		background-attachment: scroll;
 		transition: 2s;
 	}
@@ -74,51 +74,36 @@
 </head>
 <body>
 
-
 <div class="wrap">
-	
-
 	<div class="left_bar">
 		<input type="checkbox" id="check1">
-		
 		<!-- <img src="bgimg5.jpg" class="img1">
 		<img src="bgimg4.jpg" class="img"> -->
-
 		<div class="bgimg img1"></div>
 		<div class="bgimg img2"></div>
 
 		<label for="check1" class="check1">
 			<font color="white">下一張</font>
 		</label>
-
-
 	</div>
 
 	<div class="container clearfix">
 		<?php 
-	    
-
-		include '3_testDays.php';
-
+		require '3_testDays.php'; // required
 		$YEAR=$_REQUEST["number"]; 
 		$isLeap = False;
 		$days=0; //空變數
 		// $NowCol = $_POST['Start']; //紀錄現在是在第幾格(1~7)
 		$NowCol = 0;
 		$Month=""; //空變數
-
-
 		//判斷今年是否是閏年
 		if (($YEAR%400 == 0) or (($YEAR%100 !== 0) and ($YEAR%4 == 0))) {
 			$isLeap = True;
 		}else{
 			$isLeap = False;
 		}
-
-
 		//計算今年第一天星期幾
 		$NowCol = (1 + $Add_Days)%7+1; //星期一是第2格，故都要加1
-
 		//網頁標題
 		echo "<h1>西元".$YEAR."</h1>";
 		echo "<div class='wraper'>";
@@ -181,7 +166,6 @@
 					$days = 31;
 					break;
 			}
-
 			echo "<div class='block'><div class='title'>".$Month."</div>";
 			echo "<table align='center' valign='middle' border='1px' cellspacing='0'>";
 			echo "<tr>
@@ -193,22 +177,15 @@
 			          <td>FRI</td>
 			          <td><font color='red'>SAT</font></td>
 			      </tr>";
-
 			echo "<tr>";
-
 			//決定由第幾欄開始印
 			
 			//插入空白欄位
 			for($s=1;$s<$NowCol;$s++){
 				echo "<td></td>";
 			}
-
-
 			 //每次印7欄	
-
 			 For($i=1;$i<=$days;$i++){
-
-		        
 			 	if ($NowCol==7){ //每個月最後一天剛好在lastcell，不要新增tr
 			 		echo "<td><font color='red'>".$i."</font></td></tr><tr>";
 			 		$NowCol = 0; //必須設0，下面+1，下回由1開始
@@ -219,8 +196,6 @@
 			 	}
 			 	$NowCol += 1; //讓定位+1
 			 }
-
-
 			 //決定是否補上格子
 			 // if(($NowCol==0)and($i==($days))){
 				//  echo ""; //不補:當定位在0，而最後一天已經印了，不要補格子
@@ -229,20 +204,14 @@
 			 // 	echo "<td></td>"; //補上：最後沒數字的格子
 				//  }
 			 // }
-
 			  if($NowCol<>1){
 			 	 for($s=$NowCol;$s<=7;$s++){
 			 	 echo "<td></td>";
 			 	 }//不補:當定位在0，而最後一天已經印了，不要補格子
 			  }
-
 			 echo "</tr>";
 			 echo "</table></div>";
-
 		}
-		
-
-
 		?>
 		</div>
 	</div>

@@ -30,8 +30,11 @@
 
 			echo "<form action='".$_SERVER['PHP_SELF']."' method='post'>";
 			echo "<h1>產品資訊查詢</h1>";
-			$link = mysql_connect("{$MYSQL_SERVER}", "{$USER_NAME}", "{$PASSWORD}");
+
+			// 登入資料庫
+			$link = mysql_connect("{$MYSQL_SERVER}", "{$USER_NAME}", "{$PASSWORD}"); 
 			if(!$link){echo "Database connection fail";};
+			// 選擇資料庫
 			$db_selected = mysql_select_db("{$DB_NAME}", $link);
 			if(!$db_selected){echo "Table connection fail";};
 
@@ -44,7 +47,9 @@
 			for ($i=0; $i <$DB_SQL_COL_NUM ; $i++) { 
 				// echo $i."->".mysql_result($DB_SQL_RESULT,$i); // 印出所有欄位名稱
 				
+				// mysql_result(資料來源, 要取得第幾個)
 				$col_name = mysql_result($DB_SQL_RESULT,$i);
+
 				// SQL query
 				$sql_nuique = $sql_unique_.$col_name; 
 				$sql_nuique = "SELECT DISTINCT {$col_name} FROM `price`";
