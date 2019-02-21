@@ -35,14 +35,12 @@
 </html>
 
 <?php
-
 if(isset($_POST['password'])){
 	$PASSWORD = $_POST['password'];
 	$DB_NAME = 'b13_22914069_php_department_sales_statistics';
 	$TABLE_NAME = 'price';
 	$MYSQL_SERVER = 'sql300.byethost.com';
 	$USER_NAME = 'b13_22914069';
-
 	// End of Basic Setting
 	try{
 		 // 建立連線物件
@@ -57,10 +55,12 @@ if(isset($_POST['password'])){
 		exit;
 	}
 
+	//取得部門資料
 	$sql = "SELECT * FROM `dept`";
 	$DepResult = mysql_query($sql,$link);
 	$DepNameArray = array();
-	// 建立名稱陣列
+	// 建立部門名稱=>代號陣列
+	 // $row[1] : 部門代號   $row[0]:部門名稱
 	while($row=mysql_fetch_array($DepResult)){
 		$DepNameArray[$row[1]] = $row[0]; 
 	}
@@ -70,15 +70,15 @@ if(isset($_POST['password'])){
 	// 將指針歸零
 	mysql_data_seek($DepResult,0);
 
+	// 取得有哪些年度
 	$sql = "SELECT DISTINCT 資料年度 FROM `employee`";
 	$YearResult = mysql_query($sql,$link);
 
-
 	// 是否有接收到選項
 	if(isset($_POST['year']) and isset($_POST['dep'])){
-
 		// 有接收到->程式開始
 		// SQL
+		 // $dep[0] : A / A01 / B / B01   $dep[1] : 未休假獎金 / 加班及加班費支領
 		$dep = explode(';',$_POST['dep']);
 		$sql = "SELECT * FROM  `employee` LEFT JOIN  `leave` ON  `employee`.`姓名` =  `leave`.`姓名` 
 		WHERE  `部門代號` 
@@ -88,8 +88,6 @@ if(isset($_POST['password'])){
 
 		// SQL 查詢
 		$result = mysql_query($sql,$link);
-
-
 		echo "<form method='post' action='".$_SERVER['PHP_SELF']."'><table cellspacing='0'>";
 		// password
 		echo "<input type='hidden' name='password' value='".$_POST['password']."'>";
@@ -118,11 +116,8 @@ if(isset($_POST['password'])){
 				$new_row[8][$base] = $row[2]; // 部門名稱
 				$base++;
 			}	
-			
 			$count++;
 		}
-
-
 		/* 列印除錯用
 		for ($i=0; $i <$count ; $i++) { 
 			echo "name".$new_row[0][$i];
@@ -133,22 +128,18 @@ if(isset($_POST['password'])){
 		}
 		echo 'CHENG'.$new_row[4][4];
 		*/
-
 		$dep_name = ''; // 部門名稱暫存區
 		$k=0; // 資料從1開始
 		$depT = 0; // 部門未休假獎金
 		$grandT =0; //總體未休假獎金
 		while($k<$base){
-
 			$row = $new_row;
-
 			// 部門加總(避免開頭就印)
 			if($row[8][$k] != $GLOBALS['dep_name'] and $dep_name != ''){
 				$total = number_format((int)$GLOBALS['depT']);
 				echo "<tr class='dep-total'><td colspan='5' >".'部門加總'."</td><td>".$total."</td><td></td></tr>";
 				$GLOBALS['depT'] = 0;
 			}
-
 			// 不同部門，印出名稱
 			if($row[8][$k] != $GLOBALS['dep_name']){
 				global $DepNameArray;
@@ -187,7 +178,6 @@ if(isset($_POST['password'])){
 			$GLOBALS['depT'] += $row[2][$k]/28*$row[4][$k];
 			$GLOBALS['grandT'] += $row[2][$k]/28*$row[4][$k] ;
 			$GLOBALS['dep_name'] = $row[8][$k]; //更新暫存部門名稱
-
 			$k++;
 
 			//最後一次加總
@@ -198,30 +188,24 @@ if(isset($_POST['password'])){
 				echo "<tr class='dep-total'><td colspan='5'>未休假獎金總計金額</td><td>".$GLOBALS['grandT']."</td><td></td></tr>";
 			}
 		}
-		
 		echo "</form></table>";
 		echo "<input type='submit' value='回選單'>";
 		// echo "回選單<a style='color:red' href='".$_SERVER['PHP_SELF']."'>點擊</a>";
 	}else{
-		
 		// 沒接收到 -> 列印選單頁
 		echo "<form method='post' action='".$_SERVER['PHP_SELF']."'>";
-
 		// Hidden password
 		if(isset($_POST['password'])){
 			echo "<input type='hidden' name='password' value='".$_POST['password']."'>";
 		}
-
 		echo "<h2>頂新資訊公司部門員工未休假奬金統計報表</h2><p>";
 		echo "<h4>請輸入以下資料</h4>";
-
 		// 列印年度欄位
 		echo "<select name='year'>";
 		while ($row = mysql_fetch_array($GLOBALS['YearResult'])) {
 			echo "<option value='".$row[0]."'>".$row[0];
 		}
 		echo "</select>";
-	
 		// 列印部門欄位
 		$opt_val_temp = ''; // 用於暫存部門主代號資料
 		echo "<select name='dep'>";
@@ -232,7 +216,6 @@ if(isset($_POST['password'])){
 					 $n = substr($row[0],0,6); // 中文一個字3字元
 					echo "<option value='".$row[1][0]."'>".$n;
 				}
-				
 				// value = 代號 A B C D
 				if($row[1][0] != $opt_val_temp && $opt_val_temp!=''){
 					echo "<option value='".$row[1][0]."'>".$n;
