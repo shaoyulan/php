@@ -61,6 +61,7 @@ if(isset($_POST['password'])){
 	$DepResult = mysql_query($sql,$link);
 	$DepNameArray = array();
 	// 建立代號名稱對應陣列
+		// $row[1] : 部門代號   $row[0]:部門名稱
 	while($row=mysql_fetch_array($DepResult)){
 		$DepNameArray[$row[1]] = $row[0]; 
 	}
@@ -122,6 +123,7 @@ if(isset($_POST['password'])){
 		$base = 0; // 指針基準
 		$appd = array(); //放置附表陣列
 
+		// 資料整理
 		if($choice[0]=='leave'){
 			// 特休
 			while($row = mysql_fetch_array($result,MYSQL_NUM)){
@@ -186,13 +188,15 @@ if(isset($_POST['password'])){
 			$count = count($PosNameArray);
 			$appd = $GLOBALS['appd']; 
 			for ($i=0;$i <$count ; $i++) { 
+				// 以職稱為key value為空陣列
 				$appd[$PosNameArray[$i]] = array();
 			}
 
 			// 從第一個部門開始 加總資料
-			$depName_temp = '';
+			$depName_temp = ''; // 記錄部門名稱
 			$count = 0;
 			while($row = mysql_fetch_array($result,MYSQL_NUM)){
+				// $row[2] : 部門名稱
 				if($row[2] != $depName_temp && $depName_temp!=''){
 					$count++;
 				}
@@ -205,6 +209,7 @@ if(isset($_POST['password'])){
 					$appd[$row[1]][$count] = 0;
 				}
 				// 將對應到的職稱位置+1
+				 // $row[1] 職稱
 				$appd[$row[1]][$count] += $row[14];
 				$appd['小計'][$count] += $row[14];
 				$depName_temp = $row[2];
@@ -230,6 +235,7 @@ if(isset($_POST['password'])){
 		$depT = 0; // 部門合計
 		$grandT =0; //總體合計
 		if($choice[0]=='leave'){
+			// $base 整理漏的資料項目數
 			while($k<$base){
 
 				$row = $new_row;

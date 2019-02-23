@@ -78,8 +78,9 @@ if(isset($_POST['password'])){
 	if(isset($_POST['year']) and isset($_POST['dep'])){
 		// 有接收到->程式開始
 		// SQL
-		 // $dep[0] : A / A01 / B / B01   $dep[1] : 未休假獎金 / 加班及加班費支領
+		 // $dep[0] : A / A01 / B / B01   $dep[1] : 研發課 / 業務課
 		$dep = explode(';',$_POST['dep']);
+		 // 取得由SQL已排序過的資料 
 		$sql = "SELECT * FROM  `employee` LEFT JOIN  `leave` ON  `employee`.`姓名` =  `leave`.`姓名` 
 		WHERE  `部門代號` 
 		LIKE '".$dep[0]."%' AND `資料年度` = ".$_POST['year']."
